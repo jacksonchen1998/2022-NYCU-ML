@@ -1,6 +1,6 @@
 # 2022-NYCU-ML
 
-**Homework repository for the course**
+## Homework repository for the course
 
 Detail can be checked in each homework's pdf
 
