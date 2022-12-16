@@ -4,13 +4,13 @@
 
 Detail can be checked in each homework's pdf
 
-* Homework 01
+* [Homework 01](./hw1_311511052/ML2022_HW1.pdf)
     * Bayesian Linear Regression
     * Linear Regression (red wine quality)
-* Homework 02
+* [Homework 02](./hw2_311511052/ML2022_HW2_v2.pdf)
     * Classification Problem (MINIST)
     * Gaussian Process for Regression
-* Homework 03
+* [Homework 03](./hw3_311511052/ML2022_HW3.pdf)
     * Support Vector Machine (SVM)
     * Gaussian Mixture Model
 
