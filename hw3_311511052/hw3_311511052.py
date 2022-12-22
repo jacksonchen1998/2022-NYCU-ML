@@ -113,11 +113,18 @@ eig_vals_sorted = np.argsort(eig_vals)[::1][-2:] # sort eigenvalues in ascending
 data_pca = data_new @ eig_vecs[:,eig_vals_sorted] # PCA
 
 # %%
-# plot 2D data with label and resize the figure
+cmap = ListedColormap(['#FF0000', '#00FF00', '#0000FF'])
 x_min, x_max = data_pca[:, 0].min() - 1, data_pca[:, 0].max() + 1
 y_min, y_max = data_pca[:, 1].min() - 1, data_pca[:, 1].max() + 1
-plt.figure(figsize=((x_max-x_min) * 0.4,(y_max-y_min) * 0.3))
-plt.scatter(data_pca[:,0],data_pca[:,1],c=label.values)
+fig, ax = plt.subplots(figsize=((x_max-x_min) * 0.4, (y_max-y_min) * 0.3))
+
+if label.values.shape[1] == 1:
+    plt.scatter(data_pca[:,0],data_pca[:,1],c=label.values[:,0], marker='x', cmap=cmap)
+elif label.values.shape[1] == 2:
+    plt.scatter(data_pca[:,0],data_pca[:,1],c=label.values[:,1], marker='x', cmap=cmap)
+elif label.values.shape[1] == 3:
+    plt.scatter(data_pca[:,0],data_pca[:,1],c=label.values[:,2], marker='x', cmap=cmap)
+
 plt.xlabel('PC1')
 plt.ylabel('PC2')
 plt.title('2D data with label')
@@ -239,7 +246,6 @@ class SVM (object):
         self.b = None
         self.support_vector = None
         self.support_vector_label = None
-        self.support_vector_alpha = None
 
     def _kernel(self, x1, x2):
         if self.kernel == 'linear':
@@ -322,8 +328,14 @@ def plot_decision_boundary(X, y, clf, h=0.02, cmap=plt.cm.Spectral, name='linear
     xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
     Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
     Z = Z.reshape(xx.shape)
-    plt.contourf(xx, yy, Z, cmap=cmap)
-    plt.scatter(X[:, 0], X[:, 1], c=y, cmap=cmap)
+    plt.contourf(xx, yy, Z, cmap=cmap, alpha=0.2)
+    if label.values.shape[1] == 1:
+        plt.scatter(data_pca[:,0],data_pca[:,1],c=label.values[:,0], marker='x', cmap=cmap)
+    elif label.values.shape[1] == 2:
+        plt.scatter(data_pca[:,0],data_pca[:,1],c=label.values[:,1], marker='x', cmap=cmap)
+    elif label.values.shape[1] == 3:
+        plt.scatter(data_pca[:,0],data_pca[:,1],c=label.values[:,2], marker='x', cmap=cmap)
+    plt.scatter(clf.support_vectors_[:, 0], clf.support_vectors_[:, 1], s=100, linewidth=1, facecolors='none', edgecolors='k')
     plt.title('Decision Boundary using ' + name + ' kernel')
     plt.show()
 
@@ -334,7 +346,6 @@ clf.fit(data_pca, input_y)
 model_s = SVM(kernel='linear', C=1)
 model_s.fit(data_pca, input_y)
 model_s.score(data_pca, input_y)
-
 plot_decision_boundary(data_pca, input_y, clf, name='linear')
 
 # %% [markdown]
@@ -375,7 +386,6 @@ clf.fit(data_pca, input_y)
 model_s = SVM(kernel='poly', gamma=2, C=1)
 model_s.fit(data_pca, input_y)
 model_s.score(data_pca, input_y)
-
 plot_decision_boundary(data_pca, input_y, clf, name='polynomial')
 
 # %% [markdown]
