@@ -28,7 +28,7 @@ The exam scope will be decided by the instructor.
 
 In 2022 Fall, the midterm scope is from Chapter 1 to Chapter 4.
 
-The final exam scope is from Chapter 6 to Chapter 7 and Chapter 9.
+The final exam scope is from Chapter 6 to Chapter 7 and Chapter 9 and Chapter 13 (but handwritting part).
 
 ## Grading
 
